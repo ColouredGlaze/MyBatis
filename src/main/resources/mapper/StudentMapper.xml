@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--suppress ALL -->
+<mapper namespace="com.lmt.dao.StudentDao">
+    <sql id="StudentColumns">
+        id AS 'id',
+        stu_name AS 'stuName',
+        stu_age AS 'stuAge',
+        gmt_create AS 'gmtCreate',
+        gmt_modified AS 'gmtModified'
+    </sql>
+
+    <!--
+    1：parameterType和resultType使用全限定名com.lmt.entity.Student
+    2：在mybatis-config.xml中使用typeAliases标签，如下：
+     <typeAliases>
+        <typeAlias type="com.lmt.entity.Student" alias="Student"/>
+    </typeAliases>
+    -->
+    <insert id="insert" parameterType="Student">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            SELECT REPLACE(UUID(), '-', '') AS id FROM DUAL
+        </selectKey>
+        INSERT INTO student(id, stu_name, stu_age) VALUES(#{id}, #{stuName}, #{stuAge})
+    </insert>
+
+    <select id="get" parameterType="String" resultType="Student">
+        SELECT <include refid="StudentColumns"/> FROM student WHERE id = #{id}
+    </select>
+
+    <select id="listAll" resultType="Student">
+        SELECT <include refid="StudentColumns"/> FROM student
+    </select>
+
+    <update id="update" parameterType="Student">
+        UPDATE student SET stu_name = #{stuName}, stu_age = #{stuAge} WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM student WHERE id = #{id}
+    </delete>
+</mapper>
