@@ -1,15 +1,15 @@
 # MyBatis
 MyBatis Learning Process
 
-## 2018-05-07
-### 内容
+### 20180507
+#### 内容
 1. 数据库配置
 2. 简单的单表增删改查
 3. 两种方式配置Mapper（.xml文件配置和接口（注解）配置）
 4. 控制台日志输出配置
 5. 别名的使用
-6. 数据库的创建
-### 相关类及文件
+6. 数据库的创建（备注：1、使用参数zeroDateTimeBehavior=CONVERT_TO_NULL避免插入数据或读取数据时日期出现0000 00-00-00 00:00的情况。2、使用参数serverTimezone=GMT%2B8避免出现Cause: java.sql.SQLException: The server time zone value 'ÖÐ¹ú±ê×¼Ê±¼ä' is unrecognized or represents more than one time zone.）
+#### 相关类及文件
 * com.lmt.dao.StudentDao
 * com.lmt.entity.Student
 * com.lmt.mapper.StudentMapper
@@ -17,6 +17,23 @@ MyBatis Learning Process
 * jdbc.properties
 * log4j.properties
 * mybatis-config.xml
-### 相关测试类
+#### 相关测试类
 * com.lmt.dao.StudentDaoTest
 * com.lmt.mapper.StudentMapperTest
+### 20180508
+#### 内容
+1. 一对一的关联查询
+2. 一对一级联删除（使用数据库的级联删除）
+3. 提取测试类的公共部分
+#### 相关类及文件
+* com.lmt.dao.AccountDao
+* com.lmt.dao.PhoneDao
+* com.lmt.entity.Account
+* com.lmt.entity.Phone
+* mapper/AccountMapper.xml
+* mapper/PhoneMapper.xml
+* mybatis-config.xml
+#### 相关测试类
+* com.lmt.dao.AccountDaoTest
+* com.lmt.dao.PhoneDaoTest
+* com.lmt.MyBatisTest

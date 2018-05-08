@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--suppress ALL -->
+<mapper namespace="com.lmt.dao.AccountDao">
+
+    <sql id="AccountColumns">
+        id AS 'id',
+        account_email AS 'accountEmail',
+        gmt_create AS 'gmtCreate',
+        gmt_Modified AS 'gmtModified'
+    </sql>
+
+    <insert id="insert" parameterType="Account">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            SELECT REPLACE(UUID(), '-', '') AS id FROM DUAL
+        </selectKey>
+        INSERT INTO account(id, account_email) VALUES(#{id}, #{accountEmail})
+    </insert>
+
+    <select id="get" parameterType="String" resultType="Account">
+        SELECT <include refid="AccountColumns"/> FROM account WHERE id = #{id}
+    </select>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM account WHERE id = #{id}
+    </delete>
+
+</mapper>

@@ -5,7 +5,7 @@ import com.lmt.entity.Student;
 import java.util.List;
 
 /**
- * 学生DAO
+ * 简单的单表学生DAO
  *
  * @author MT-Lin
  * @date 2018/05/06

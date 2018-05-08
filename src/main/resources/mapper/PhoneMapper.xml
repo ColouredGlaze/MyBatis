@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--suppress ALL -->
+<mapper namespace="com.lmt.dao.PhoneDao">
+
+    <sql id="PhoneColumns">
+        p.id AS 'phone_id',
+        p.phone_number AS 'phone_phoneNumber',
+        p.gmt_create AS 'phone_gmtCreate',
+        p.gmt_Modified AS 'phone_gmtModified'
+    </sql>
+    <sql id="AccountColumns">
+        a.id AS 'account_id',
+        a.account_email AS 'account_accountEmail',
+        a.gmt_create AS 'account_gmtCreate',
+        a.gmt_Modified AS 'account_gmtModified'
+    </sql>
+
+    <resultMap id="PhoneResultMap" type="com.lmt.entity.Phone">
+        <id property="id" column="phone_id"/>
+        <result property="phoneNumber" column="phone_phoneNumber"/>
+        <result property="gmtCreate" column="phone_gmtCreate"/>
+        <result property="gmtModified" column="phone_gmtModified"/>
+        <association property="account" javaType="com.lmt.entity.Account">
+            <id property="id" column="account_id"/>
+            <result property="accountEmail" column="account_accountEmail"/>
+            <result property="gmtCreate" column="account_gmtCreate"/>
+            <result property="gmtModified" column="account_gmtModified"/>
+        </association>
+    </resultMap>
+    
+    <insert id="insert" parameterType="Phone" useGeneratedKeys="true" keyProperty="id">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            SELECT REPLACE(UUID(), '-', '') AS id FROM DUAL
+        </selectKey>
+        INSERT INTO phone(id, phone_number, account_id) VALUES(#{id}, #{phoneNumber}, #{account.id})
+    </insert>
+
+    <select id="get" parameterType="String" resultMap="PhoneResultMap">
+        SELECT
+        <include refid="PhoneColumns"/>,
+        <include refid="AccountColumns"/>
+        FROM phone AS p, account AS a WHERE p.account_id = a.id AND p.id = #{id}
+    </select>
+
+    <select id="listAll" resultMap="PhoneResultMap">
+        SELECT
+        <include refid="PhoneColumns"/>,
+        <include refid="AccountColumns"/>
+        FROM phone AS p, account AS a WHERE p.account_id = a.id
+    </select>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM phone WHERE id = #{id}
+    </delete>
+</mapper>
