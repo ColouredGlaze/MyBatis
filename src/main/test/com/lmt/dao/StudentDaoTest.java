@@ -13,11 +13,10 @@ import static org.junit.Assert.*;
 public class StudentDaoTest extends MyBatisTest {
 
     private static StudentDao studentDao;
-    private static String idTemp;
 
     @BeforeClass
     public static void setDao() {
-        studentDao = getSqlSession().getMapper(StudentDao.class);
+        studentDao = sqlSession.getMapper(StudentDao.class);
     }
 
     @Test
@@ -52,7 +51,7 @@ public class StudentDaoTest extends MyBatisTest {
         student.setStuName("酒离殇");
         int updateResult = studentDao.update(student);
         assertEquals(1, updateResult);
-        getSqlSession().commit();
+        sqlSession.commit();
         student = studentDao.get(idTemp);
         assertNotNull(student);
         System.out.println("Update After Student:" + student);

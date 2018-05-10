@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--suppress ALL -->
+<mapper namespace="com.lmt.dao.AuthorDao">
+
+    <sql id="AuthorColumns">
+        author.id AS 'author_id',
+        author.full_name AS 'author_fullName',
+        author.gmt_create AS 'author_gmtCreate',
+        author.gmt_Modified AS 'author_gmtModified'
+    </sql>
+
+    <sql id="BookColumns">
+        book.id AS 'book_id',
+        book.title AS 'book_title',
+        book.author_id AS 'book_author_id',
+        book.gmt_create AS 'book_gmtCreate',
+        book.gmt_Modified AS 'book_gmtModified'
+    </sql>
+
+    <resultMap id="AuthorResultMap" type="Author">
+        <id property="id" column="author_id"/>
+        <result property="fullName" column="author_fullName"/>
+        <result property="gmtCreate" column="author_gmtCreate"/>
+        <result property="gmtModified" column="author_gmtModified"/>
+        <collection property="books" ofType="Book">
+            <id property="id" column="book_id"/>
+            <result property="title" column="book_title"/>
+            <result property="gmtCreate" column="book_gmtCreate"/>
+            <result property="gmtModified" column="book_gmtModified"/>
+        </collection>
+    </resultMap>
+
+    <insert id="insert" parameterType="Author">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            SELECT REPLACE(UUID(), '-', '') AS id FROM DUAL
+        </selectKey>
+        INSERT INTO author(id, full_name) VALUES(#{id}, #{fullName})
+    </insert>
+
+    <select id="getAuthorAndBooks" parameterType="String" resultMap="AuthorResultMap">
+        SELECT
+        <include refid="AuthorColumns"/>,
+        <include refid="BookColumns"/>
+        FROM author
+        LEFT JOIN book ON author.id = book.author_id
+        WHERE author.id = #{authorId}
+    </select>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM author WHERE id = #{id}
+    </delete>
+
+</mapper>

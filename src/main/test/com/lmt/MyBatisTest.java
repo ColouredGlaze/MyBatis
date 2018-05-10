@@ -16,7 +16,8 @@ import java.io.Reader;
  */
 public class MyBatisTest {
 
-    private static SqlSession sqlSession;
+    protected static SqlSession sqlSession;
+    protected static String idTemp;
 
     @BeforeClass
     public static void setEnvironment() throws Exception {
@@ -39,7 +40,4 @@ public class MyBatisTest {
         sqlSession.commit();
     }
 
-    protected static SqlSession getSqlSession() {
-        return sqlSession;
-    }
 }

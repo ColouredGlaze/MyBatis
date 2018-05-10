@@ -9,9 +9,12 @@
         <setting name="aggressiveLazyLoading" value="false"/>
     </settings>
     <typeAliases>
+        <!-- 1、配置取别名 -->
         <typeAlias type="com.lmt.entity.Student" alias="Student"/>
         <typeAlias type="com.lmt.entity.Phone" alias="Phone"/>
         <typeAlias type="com.lmt.entity.Account" alias="Account"/>
+        <!-- 2、注解方式取别名 -->
+        <package name="com.lmt.entity"/>
     </typeAliases>
     <environments default="development">
         <environment id="development">
@@ -26,10 +29,12 @@
     </environments>
     <mappers>
         <!-- 1、两种使用xml配置文件注册Mapper的方式 -->
-        <!--<mapper resource="mapper/StudentMapper.xml"/>-->
-        <mapper url="file:C:/Users/MT-Lin/IdeaProjects/MyBatis/src/main/resources/mapper/StudentMapper.xml"/>
+        <!--<mapper url="file:C:/Users/{YourUserName}/IdeaProjects/MyBatis/src/main/resources/mapper/StudentMapper.xml"/>-->
+        <mapper resource="mapper/StudentMapper.xml"/>
         <mapper resource="mapper/PhoneMapper.xml"/>
         <mapper resource="mapper/AccountMapper.xml"/>
+        <mapper resource="mapper/AuthorMapper.xml"/>
+        <mapper resource="mapper/BookMapper.xml"/>
         <!-- 2、两种使用接口（注解）注册Mapper的方式 -->
         <!--<mapper class="com.lmt.mapper.StudentMapper"/>-->
         <package name="com.lmt.mapper"/>

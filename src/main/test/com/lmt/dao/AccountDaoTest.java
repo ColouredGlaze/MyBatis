@@ -11,11 +11,10 @@ import static org.junit.Assert.*;
 public class AccountDaoTest extends MyBatisTest {
 
     private static AccountDao accountDao;
-    private static String idTemp;
 
     @BeforeClass
     public static void setDao() {
-        accountDao = getSqlSession().getMapper(AccountDao.class);
+        accountDao = sqlSession.getMapper(AccountDao.class);
     }
 
     @Test

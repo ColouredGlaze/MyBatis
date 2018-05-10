@@ -20,11 +20,10 @@ public class PhoneDaoTest extends MyBatisTest {
 
     private static PhoneDao phoneDao;
     private static String accountIdTemp = "fbed4cfa52c211e8a8f754e1ad6e4031";
-    private static String idTemp;
 
     @BeforeClass
     public static void setDao() {
-        phoneDao = getSqlSession().getMapper(PhoneDao.class);
+        phoneDao = sqlSession.getMapper(PhoneDao.class);
     }
 
     @Test

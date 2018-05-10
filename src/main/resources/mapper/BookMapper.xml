@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--suppress ALL -->
+<mapper namespace="com.lmt.dao.BookDao">
+
+    <sql id="BookColumns">
+        id AS 'id',
+        title AS 'title',
+        gmt_create AS 'gmtCreate',
+        gmt_Modified AS 'gmtModified'
+    </sql>
+
+    <insert id="insert" parameterType="Book">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            SELECT REPLACE(UUID(), '-', '') AS id FROM DUAL
+        </selectKey>
+        INSERT INTO book(id, title, author_id) VALUES(#{id}, #{title}, #{author.id})
+    </insert>
+
+    <select id="get" parameterType="String" resultType="Book">
+        SELECT <include refid="BookColumns"/> FROM book WHERE id = #{id}
+    </select>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM book WHERE id = #{id}
+    </delete>
+
+</mapper>

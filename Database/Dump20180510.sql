@@ -44,6 +44,61 @@ INSERT INTO `account` VALUES ('fbed4cfa52c211e8a8f754e1ad6e4031','ming******@out
 UNLOCK TABLES;
 
 --
+-- Table structure for table `author`
+--
+
+DROP TABLE IF EXISTS `author`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `author` (
+  `id` varchar(32) NOT NULL,
+  `full_name` varchar(30) NOT NULL,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `author`
+--
+
+LOCK TABLES `author` WRITE;
+/*!40000 ALTER TABLE `author` DISABLE KEYS */;
+INSERT INTO `author` VALUES ('327e64eb540211e88b7854e1ad6e4031','路遥','2018-05-10 11:28:24',NULL),('7b9ff9a9540011e88b7854e1ad6e4031','卡勒德·胡赛尼','2018-05-10 11:16:08',NULL);
+/*!40000 ALTER TABLE `author` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `book`
+--
+
+DROP TABLE IF EXISTS `book`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `book` (
+  `id` varchar(32) NOT NULL,
+  `title` varchar(20) NOT NULL,
+  `author_id` varchar(32) NOT NULL,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `fk_author_id` (`author_id`),
+  CONSTRAINT `fk_author_id` FOREIGN KEY (`author_id`) REFERENCES `author` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `book`
+--
+
+LOCK TABLES `book` WRITE;
+/*!40000 ALTER TABLE `book` DISABLE KEYS */;
+INSERT INTO `book` VALUES ('1de75d20540111e88b7854e1ad6e4031','追风筝的人','7b9ff9a9540011e88b7854e1ad6e4031','2018-05-10 11:20:40',NULL),('1deb7cfe540111e88b7854e1ad6e4031','灿烂千阳','7b9ff9a9540011e88b7854e1ad6e4031','2018-05-10 11:20:40',NULL),('1debc6c8540111e88b7854e1ad6e4031','群山回唱','7b9ff9a9540011e88b7854e1ad6e4031','2018-05-10 11:20:40',NULL);
+/*!40000 ALTER TABLE `book` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `phone`
 --
 
@@ -115,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-08 23:52:39
+-- Dump completed on 2018-05-10 11:32:41

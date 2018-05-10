@@ -18,7 +18,7 @@
         a.gmt_Modified AS 'account_gmtModified'
     </sql>
 
-    <resultMap id="PhoneResultMap" type="com.lmt.entity.Phone">
+    <resultMap id="PhoneResultMap" type="Phone">
         <id property="id" column="phone_id"/>
         <result property="phoneNumber" column="phone_phoneNumber"/>
         <result property="gmtCreate" column="phone_gmtCreate"/>
@@ -31,7 +31,7 @@
         </association>
     </resultMap>
     
-    <insert id="insert" parameterType="Phone" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="Phone">
         <selectKey keyProperty="id" resultType="String" order="BEFORE">
             SELECT REPLACE(UUID(), '-', '') AS id FROM DUAL
         </selectKey>
