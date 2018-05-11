@@ -1,6 +1,6 @@
 package com.lmt.entity;
 
-import java.util.Date;
+import com.lmt.mybatis.MyBatisEntity;
 
 /**
  * 一对一关联，一个帐号对应一个手机号
@@ -8,20 +8,9 @@ import java.util.Date;
  * @author MT-Lin
  * @date 2018/05/08
  */
-public class Account {
+public class Account extends MyBatisEntity {
 
-    private String id;
     private String accountEmail;
-    private Date gmtCreate;
-    private Date gmtModified;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getAccountEmail() {
         return accountEmail;
@@ -29,22 +18,6 @@ public class Account {
 
     public void setAccountEmail(String accountEmail) {
         this.accountEmail = accountEmail;
-    }
-
-    public Date getGmtCreate() {
-        return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
-    public Date getGmtModified() {
-        return gmtModified;
-    }
-
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
     }
 
     @Override

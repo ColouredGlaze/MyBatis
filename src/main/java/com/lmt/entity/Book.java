@@ -1,8 +1,7 @@
 package com.lmt.entity;
 
+import com.lmt.mybatis.MyBatisEntity;
 import org.apache.ibatis.type.Alias;
-
-import java.util.Date;
 
 /**
  * 一对多，书
@@ -11,21 +10,10 @@ import java.util.Date;
  * @date 2018/05/08
  */
 @Alias("Book")
-public class Book {
+public class Book extends MyBatisEntity {
 
-    private String id;
     private String title;
     private Author author;
-    private Date gmtCreate;
-    private Date gmtModified;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -41,22 +29,6 @@ public class Book {
 
     public void setAuthor(Author author) {
         this.author = author;
-    }
-
-    public Date getGmtCreate() {
-        return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
-    public Date getGmtModified() {
-        return gmtModified;
-    }
-
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
     }
 
     @Override

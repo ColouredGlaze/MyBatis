@@ -1,6 +1,6 @@
 package com.lmt.entity;
 
-import java.util.Date;
+import com.lmt.mybatis.MyBatisEntity;
 
 /**
  * 学生
@@ -8,21 +8,10 @@ import java.util.Date;
  * @author MT-Lin
  * @date 2018/05/06
  */
-public class Student {
+public class Student extends MyBatisEntity {
 
-    private String id;
     private String stuName;
     private int stuAge;
-    private Date gmtCreate;
-    private Date gmtModified;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getStuName() {
         return stuName;
@@ -38,22 +27,6 @@ public class Student {
 
     public void setStuAge(int stuAge) {
         this.stuAge = stuAge;
-    }
-
-    public Date getGmtCreate() {
-        return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
-    public Date getGmtModified() {
-        return gmtModified;
-    }
-
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
     }
 
     @Override

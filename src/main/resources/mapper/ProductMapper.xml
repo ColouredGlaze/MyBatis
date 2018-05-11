@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--suppress ALL -->
+<mapper namespace="com.lmt.dao.ProductDao">
+
+    <sql id="ProductColumns">
+        product.id AS 'product_id',
+        product.brand_name AS 'product_brandName',
+        product.gmt_create AS 'product_gmtCreate',
+        product.gmt_Modified AS 'product_gmtModified'
+    </sql>
+
+    <sql id="ManufacturerColumns">
+        manufacturer.id AS 'manufacturer_id',
+        manufacturer.name_of_manufacturer AS 'manufacturer_nameOfManufacturer',
+        manufacturer.gmt_create AS 'manufacturer_gmtCreate',
+        manufacturer.gmt_Modified AS 'manufacturer_gmtModified'
+    </sql>
+
+    <resultMap id="ProductResultMap" type="Product">
+        <id property="id" column="product_id"/>
+        <result property="brandName" column="product_brandName"/>
+        <result property="gmtCreate" column="product_gmtCreate"/>
+        <result property="gmtModified" column="product_gmtModified"/>
+        <collection property="manufacturers" ofType="Manufacturer">
+            <id property="id" column="manufacturer_id"/>
+            <result property="nameOfManufacturer" column="manufacturer_nameOfManufacturer"/>
+            <result property="gmtCreate" column="manufacturer_gmtCreate"/>
+            <result property="gmtModified" column="manufacturer_gmtModified"/>
+        </collection>
+    </resultMap>
+
+    <insert id="insert" parameterType="Product">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            SELECT REPLACE(UUID(), '-', '') AS id FROM DUAL
+        </selectKey>
+        INSERT INTO product(id, brand_name) VALUES(#{id}, #{brandName})
+    </insert>
+
+    <select id="get" parameterType="String" resultMap="ProductResultMap">
+        SELECT
+        <include refid="ProductColumns"/>,
+        <include refid="ManufacturerColumns"/>
+        FROM product
+        LEFT JOIN manufacturer_product ON product.id = manufacturer_product.product_id
+        LEFT JOIN manufacturer ON manufacturer.id = manufacturer_product.manufacturer_id
+        WHERE product.id = #{id}
+    </select>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM product WHERE id = #{id}
+    </delete>
+
+</mapper>

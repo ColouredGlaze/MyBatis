@@ -35,6 +35,9 @@
         <mapper resource="mapper/AccountMapper.xml"/>
         <mapper resource="mapper/AuthorMapper.xml"/>
         <mapper resource="mapper/BookMapper.xml"/>
+        <mapper resource="mapper/ManufacturerMapper.xml"/>
+        <mapper resource="mapper/ManufacturerProductMapper.xml"/>
+        <mapper resource="mapper/ProductMapper.xml"/>
         <!-- 2、两种使用接口（注解）注册Mapper的方式 -->
         <!--<mapper class="com.lmt.mapper.StudentMapper"/>-->
         <package name="com.lmt.mapper"/>
