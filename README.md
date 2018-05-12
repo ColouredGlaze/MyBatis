@@ -73,3 +73,15 @@ MyBatis Learning Process
 * com.lmt.dao.ManufacturerDaoTest
 * com.lmt.dao.ManufacturerProductDaoTest
 * com.lmt.dao.ProductDaoTest
+### 20180512
+#### 内容
+1. 标签的使用（foreach、trim、if、set、bind、where、choose、when、otherwise）
+2. 两种模糊查询
+#### 相关类及文件
+* com.lmt.dao.ComputerDao
+* com.lmt.entity.Computer
+* mapper/ComputerMapper.xml
+* mybatis-config.xml
+* Database/Dump20180512.sql
+#### 相关测试类
+* com.lmt.dao.ComputerDaoTest

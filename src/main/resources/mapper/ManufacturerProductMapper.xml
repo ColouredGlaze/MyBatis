@@ -56,8 +56,8 @@
         <include refid="ProductColumns"/>,
         <include refid="ManufacturerColumns"/>
         FROM manufacturer_product, product, manufacturer
-        WHERE
-        (manufacturer_product.manufacturer_id = #{manufacturerId} AND manufacturer_product.product_id = #{productId})
+        WHERE (manufacturer_product.manufacturer_id = #{manufacturerId}
+        AND manufacturer_product.product_id = #{productId})
         AND manufacturer.id = #{manufacturerId}
         AND product.id = #{productId}
     </select>

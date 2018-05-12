@@ -30,12 +30,14 @@ public interface StudentDao {
 
     /**
      * 查询所有学生
+     *
      * @return 所有学生数据
      */
     List<Student> listAll();
 
     /**
      * 更新学生数据
+     *
      * @param student 要更新的学生
      * @return 数据库影响条数
      */

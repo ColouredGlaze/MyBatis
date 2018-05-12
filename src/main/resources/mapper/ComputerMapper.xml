@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--suppress ALL -->
+<mapper namespace="com.lmt.dao.ComputerDao">
+
+    <sql id="ComputerColumns">
+        id AS 'id',
+        trademark AS 'trademark',
+        owner AS 'owner',
+        gmt_create AS 'gmtCreate',
+        gmt_Modified AS 'gmtModified'
+    </sql>
+
+    <resultMap id="ComputerResultMap" type="Computer">
+        <id property="id" column="id"/>
+        <result property="trademark" column="trademark"/>
+        <result property="owner" column="owner"/>
+        <result property="gmtCreate" column="gmtCreate"/>
+        <result property="gmtModified" column="gmtModified"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="Computer">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            SELECT REPLACE(UUID(), '-', '') AS id FROM DUAL
+        </selectKey>
+        INSERT INTO computer(id, trademark, owner) VALUES (#{id}, #{trademark}, #{owner})
+    </insert>
+
+    <insert id="insertAll" useGeneratedKeys="true" keyProperty="id">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            SELECT REPLACE(UUID(), '-', '') AS id FROM DUAL
+        </selectKey>
+        INSERT INTO computer(id, trademark, owner)
+        SELECT temp.* FROM
+        <foreach collection="list" item="computer" open="(" close=")" separator="UNION ALL">
+            SELECT
+            REPLACE(UUID(), '-', ''),
+            #{computer.trademark},
+            #{computer.owner}
+            FROM DUAL
+        </foreach>
+        AS temp
+    </insert>
+
+    <select id="get" parameterType="String" resultType="Computer">
+        SELECT <include refid="ComputerColumns"/> FROM computer WHERE id = #{id}
+    </select>
+
+    <select id="listAll" resultType="Computer">
+        SELECT <include refid="ComputerColumns"/> FROM computer
+    </select>
+
+    <update id="updateByTrim" parameterType="Computer">
+        UPDATE computer
+        <trim prefix="SET" suffixOverrides=","> <!-- suffix="," -->
+            <if test="trademark != null and trademark != ''">computer.trademark = #{trademark},</if>
+            <if test="owner != null and owner != ''">computer.owner = #{owner},</if>
+        </trim>
+        WHERE computer.id = #{id}
+    </update>
+
+    <update id="updateBySet" parameterType="Computer">
+        UPDATE computer
+        <set>
+            <if test="trademark != null and trademark != ''">computer.trademark = #{trademark},</if>
+            <if test="owner != null and owner != ''">computer.owner = #{owner},</if>
+        </set>
+        WHERE computer.id = #{id}
+    </update>
+
+    <select id="listByTrademarkAndOwnerByTrim" resultMap="ComputerResultMap">
+        SELECT
+        <include refid="ComputerColumns"/>
+        FROM computer
+        <trim prefix="WHERE" suffixOverrides="AND |OR ">
+            <if test="trademark != null and trademark != ''">trademark LIKE CONCAT(CONCAT('%', #{trademark}), '%')</if>
+            <if test="owner != null and owner != ''">AND owner LIKE CONCAT(CONCAT('%', #{owner}), '%')</if>
+        </trim>
+    </select>
+
+    <select id="listByTrademarkAndOwnerByWhere" resultMap="ComputerResultMap">
+        <bind name="trademarkLike" value="'%' + _parameter.getTrademark() + '%'"/>
+        <bind name="ownerLike" value="'%' + _parameter.getOwner() + '%'"/>
+        SELECT
+        <include refid="ComputerColumns"/>
+        FROM computer
+        <where>
+            <if test="trademark != null and trademark != ''">trademark LIKE #{trademarkLike}</if>
+            <if test="owner != null and owner != ''">AND owner LIKE #{ownerLike}</if>
+        </where>
+    </select>
+
+    <select id="listByTrademarkAndOwnerByChoose" resultMap="ComputerResultMap">
+        <bind name="trademarkLike" value="'%' + _parameter.getTrademark() + '%'"/>
+        <bind name="ownerLike" value="'%' + _parameter.getOwner() + '%'"/>
+        SELECT
+        <include refid="ComputerColumns"/>
+        FROM computer
+        <where>
+            <choose>
+                <when test="trademark != null and trademark != ''">trademark LIKE #{trademarkLike}</when>
+                <when test="owner != null and owner != ''">AND owner LIKE #{ownerLike}</when>
+                <otherwise> AND 1 = 1 </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <delete id="delete" parameterType="String">
+        DELETE FROM computer WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteAll" parameterType="Computer">
+        DELETE FROM computer WHERE id IN
+        <foreach collection="list" item="computer" index="index" open="(" close=")" separator=",">
+            #{computer.id}
+        </foreach>
+    </delete>
+</mapper>
